@@ -53,3 +53,4 @@ app.post('/chat', (req, res) => {
 app.listen(PORT, () => {
     console.log(`AlmaLoop bot is running on port ${PORT}`);
 });
+// Small change to trigger Heroku redeploy
