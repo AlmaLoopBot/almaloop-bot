@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 
 // Webhook for Telegram
 app.post('/telegram', async (req, res) => {
+    console.log("Received Telegram message:", req.body);  // Debugging line
     const { message } = req.body;
     if (message && message.text) {
         const chatId = message.chat.id;
@@ -24,33 +25,11 @@ app.post('/telegram', async (req, res) => {
     res.sendStatus(200);
 });
 
-// Webhook for WhatsApp (via Twilio API example)
-app.post('/whatsapp', async (req, res) => {
-    const { Body, From } = req.body;
-    const responseText = `Hello! I'm AlmaLoop. You said: ${Body}`;
-    await axios.post(`https://api.twilio.com/2010-04-01/Accounts/${process.env.TWILIO_ACCOUNT_SID}/Messages.json`,
-        new URLSearchParams({
-            From: process.env.TWILIO_WHATSAPP_NUMBER,
-            To: From,
-            Body: responseText
-        }),
-        {
-            auth: {
-                username: process.env.TWILIO_ACCOUNT_SID,
-                password: process.env.TWILIO_AUTH_TOKEN
-            }
-        }
-    );
-    res.sendStatus(200);
-});
-
-// Basic Web Chatbot Endpoint
-app.post('/chat', (req, res) => {
-    const { message } = req.body;
-    res.json({ response: `Hello! I'm AlmaLoop. You said: ${message}` });
+// Basic homepage (so Heroku doesn’t say "Nothing is here yet")
+app.get('/', (req, res) => {
+    res.send('AlmaLoop Bot is running!');
 });
 
 app.listen(PORT, () => {
     console.log(`AlmaLoop bot is running on port ${PORT}`);
 });
-// Small change to trigger Heroku redeploy
