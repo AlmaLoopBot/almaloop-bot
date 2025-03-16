@@ -10,9 +10,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-// Webhook for Telegram
+// ✅ Webhook for Telegram (Make sure this exists)
 app.post('/telegram', async (req, res) => {
-    console.log("Received Telegram message:", req.body);  // Debugging line
+    console.log("Received Telegram message:", req.body);  // Debugging log
     const { message } = req.body;
     if (message && message.text) {
         const chatId = message.chat.id;
@@ -25,7 +25,7 @@ app.post('/telegram', async (req, res) => {
     res.sendStatus(200);
 });
 
-// Basic homepage (so Heroku doesn’t say "Nothing is here yet")
+// ✅ Basic homepage route (To avoid "Nothing is here yet" message)
 app.get('/', (req, res) => {
     res.send('AlmaLoop Bot is running!');
 });
